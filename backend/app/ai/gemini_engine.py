@@ -49,6 +49,7 @@ class GeminiEngine:
         3. Extract any visible_text, especially model numbers, serial codes, or labels.
         4. Predict the top 1 to 3 possible_models. Provide the full model_name, a clean model_number, your confidence level, and your reasoning. 
            Your reasoning MUST explain what visual design features (camera layout, colors, transparent back, interface) or text led to this conclusion.
+           If you cannot clearly read the model number from the image and are guessing based on general shape, you MUST set confidence to 'Low' or a percentage below 50%.
         """
         
         try:

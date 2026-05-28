@@ -82,6 +82,8 @@ async def process_image_pipeline(image_path: str) -> PredictionResponse:
         if asset_category.lower() != "unknown" and asset_category.lower() in model_name.lower():
             score += 5.0
             
+
+            
         # Clamp confidence to max 95.0 and minimum 0.0, save as ratio (0.0 to 0.95)
         # If score is 0 due to some edge case, default to 0.50.
         if score <= 0.0:
@@ -114,7 +116,7 @@ async def process_image_pipeline(image_path: str) -> PredictionResponse:
         final_models.append(fallback_model)
         final_pred_name = fallback_model.model_name
         
-    note = f"Identified via Gemini 2.0 Flash. Extracted text: {', '.join(visible_text) if visible_text else 'None'}."
+    note = f"Identified via Gemini 3 Flash. Extracted text: {', '.join(visible_text) if visible_text else 'None'}."
         
     return PredictionResponse(
         asset_name=f"{brand} {asset_category}".strip() if brand != "Unknown" else asset_category.capitalize(),
