@@ -17,3 +17,13 @@ export const uploadAndPredict = async (file) => {
     throw new Error(error.response?.data?.detail || 'An error occurred during prediction.');
   }
 };
+
+export const fetchHistory = async (brand = '') => {
+  try {
+    const params = brand ? { brand } : {};
+    const response = await axios.get(`${API_URL}/history`, { params });
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.detail || 'Failed to fetch history.');
+  }
+};

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import ImageUpload from './components/ImageUpload';
 import ResultsDisplay from './components/ResultsDisplay';
+import History from './components/History';
 import { uploadAndPredict } from './services/api';
 
 function App() {
+  const [activeTab, setActiveTab] = useState('upload');
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
@@ -36,12 +38,28 @@ function App() {
           <h1 className="text-4xl md:text-5xl font-black mb-3 tracking-tight text-white">
             Asset <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent">Intelligence</span>
           </h1>
-          <p className="text-lg text-slate-400 max-w-2xl mx-auto font-medium leading-relaxed">
+          <p className="text-lg text-slate-400 max-w-2xl mx-auto font-medium leading-relaxed mb-6">
             Upload an image of any device to instantly identify its make and model.
           </p>
+          <div className="flex justify-center gap-4">
+            <button 
+              onClick={() => setActiveTab('upload')} 
+              className={`px-6 py-2 rounded-full font-semibold transition-all ${activeTab === 'upload' ? 'bg-primary text-white shadow-lg shadow-primary/30' : 'bg-slate-800/80 text-slate-300 hover:bg-slate-700'}`}
+            >
+              Upload
+            </button>
+            <button 
+              onClick={() => setActiveTab('history')} 
+              className={`px-6 py-2 rounded-full font-semibold transition-all ${activeTab === 'history' ? 'bg-primary text-white shadow-lg shadow-primary/30' : 'bg-slate-800/80 text-slate-300 hover:bg-slate-700'}`}
+            >
+              History
+            </button>
+          </div>
         </header>
 
-        <main className={`w-full flex-1 flex ${result ? 'flex-col lg:flex-row gap-8 items-start' : 'flex-col items-center justify-center'} min-h-0 overflow-hidden`}>
+        {activeTab === 'upload' && (
+          <main className={`w-full flex-1 flex ${result ? 'flex-col lg:flex-row gap-8 items-start' : 'flex-col items-center justify-center'} min-h-0 overflow-hidden`}>
+
           <div className={`${result ? 'w-full lg:w-1/3 shrink-0' : 'w-full'} flex flex-col transition-all duration-500 max-h-full`}>
             <ImageUpload onUpload={handleUpload} isLoading={isLoading} />
             
@@ -58,6 +76,11 @@ function App() {
             </div>
           )}
         </main>
+        )}
+
+        {activeTab === 'history' && (
+          <History />
+        )}
       </div>
     </div>
   );

@@ -6,6 +6,12 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.endpoints import router as api_router
 from dotenv import load_dotenv
+from fastapi.staticfiles import StaticFiles
+from app.db.database import engine
+from app.db import models
+
+# Create database tables
+models.Base.metadata.create_all(bind=engine)
 
 # Load environment variables
 load_dotenv()
@@ -26,6 +32,11 @@ app.add_middleware(
 )
 
 app.include_router(api_router, prefix="/api")
+
+# Mount uploads directory for serving images statically
+os.makedirs("uploads", exist_ok=True)
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
+
 
 if __name__ == "__main__":
     import uvicorn

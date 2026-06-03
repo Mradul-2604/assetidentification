@@ -18,3 +18,14 @@ class PredictionResponse(BaseModel):
     possible_models: List[ModelPrediction]
     final_prediction: str
     note: str
+
+from datetime import datetime
+
+class PredictionHistoryResponse(BaseModel):
+    model_config = ConfigDict(protected_namespaces=())
+    id: int
+    brand: str
+    model_name: str
+    confidence: float
+    image_path: str
+    timestamp: datetime
